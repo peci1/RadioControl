@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<Package
+  xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
+  xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest"
+  xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
+  xmlns:uap5="http://schemas.microsoft.com/appx/manifest/uap/windows10/5"
+  IgnorableNamespaces="uap uap5 mp">
+
+  <Identity
+    Name="26cdc21e-bd12-48cd-bafa-f48db7625608"
+    Publisher="CN=Martin Pecka"
+    Version="1.0.0.0" />
+
+  <mp:PhoneIdentity PhoneProductId="26cdc21e-bd12-48cd-bafa-f48db7625608" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+
+  <Properties>
+    <DisplayName>RadioControl</DisplayName>
+    <PublisherDisplayName>Martin Pecka</PublisherDisplayName>
+    <Logo>Assets\StoreLogo.png</Logo>
+  </Properties>
+
+  <Dependencies>
+    <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.0.0" MaxVersionTested="10.0.0.0" />
+  </Dependencies>
+
+  <Resources>
+    <Resource Language="x-generate"/>
+  </Resources>
+
+  <Applications>
+    <Application Id="App"
+      Executable="$targetnametoken$.exe"
+      EntryPoint="RadioControl.App">
+      <uap:VisualElements
+        DisplayName="RadioControl"
+        Square150x150Logo="Assets\Square150x150Logo.png"
+        Square44x44Logo="Assets\Square44x44Logo.png"
+        Description="RadioControl"
+        BackgroundColor="transparent">
+        <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png"/>
+        <uap:SplashScreen Image="Assets\SplashScreen.png" />
+      </uap:VisualElements>
+	  <Extensions>
+		  <uap5:Extension
+			Category="windows.appExecutionAlias"
+			Executable="RadioControl.exe"
+			EntryPoint="RadioControl.App">
+			<uap5:AppExecutionAlias>
+			  <uap5:ExecutionAlias Alias="RadioControl.exe" />
+			</uap5:AppExecutionAlias>
+		  </uap5:Extension>
+	  </Extensions>
+    </Application>
+  </Applications>
+
+  <Capabilities>
+    <Capability Name="internetClient" />
+	<DeviceCapability Name="radios" />
+  </Capabilities>
+</Package>
