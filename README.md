@@ -6,7 +6,15 @@ Launch the app to be running (even minimized), and then you can use it from comm
     radiocontrol.exe 0 on
     radiocontrol Bluetooth off
     
+If you get problems like `command not found` and alike, please report them as an issue here. As a workaround, call the program by the absolute path:
+
+    "%USERPROFILE%\AppData\Local\Microsoft\WindowsApps\radiocontrol.EXE"
+    
 [![Get app from Microsoft Store](https://assets.windowsphone.com/13484911-a6ab-4170-8b7e-795c1e8b4165/English_get_L_InvariantCulture_Default.png)](https://www.microsoft.com/store/apps/9PJBRHTBVNMR?ocid=badge)
+
+## (Better) alternative
+
+You can even control your radios without installing any app, just using a cmdlet described here: https://superuser.com/a/1293303/255660 .
 
 ## Supported platforms
 
