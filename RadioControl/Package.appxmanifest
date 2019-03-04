@@ -1,61 +1,41 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-
-<Package
-  xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
-  xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest"
-  xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
-  xmlns:uap5="http://schemas.microsoft.com/appx/manifest/uap/windows10/5"
-  IgnorableNamespaces="uap uap5 mp">
-
-  <Identity
-    Name="26cdc21e-bd12-48cd-bafa-f48db7625608"
-    Publisher="CN=Martin Pecka"
-    Version="1.0.0.0" />
-
-  <mp:PhoneIdentity PhoneProductId="26cdc21e-bd12-48cd-bafa-f48db7625608" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
-
+<Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" xmlns:uap5="http://schemas.microsoft.com/appx/manifest/uap/windows10/5" IgnorableNamespaces="uap uap5 mp">
+  <Identity Name="16247MartinPecka.RadioControlCmd" Publisher="CN=4302291F-8420-41EE-A1F5-527A3E8F0237" Version="1.1.3.0" />
+  <mp:PhoneIdentity PhoneProductId="cadd95bb-354f-4f44-a533-2f4df9ba19ab" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
-    <DisplayName>RadioControl</DisplayName>
+    <DisplayName>RadioControlCmd</DisplayName>
     <PublisherDisplayName>Martin Pecka</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
-
   <Dependencies>
     <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.0.0" MaxVersionTested="10.0.0.0" />
   </Dependencies>
-
   <Resources>
-    <Resource Language="x-generate"/>
+    <Resource Language="x-generate" />
   </Resources>
-
   <Applications>
-    <Application Id="App"
-      Executable="$targetnametoken$.exe"
-      EntryPoint="RadioControl.App">
-      <uap:VisualElements
-        DisplayName="RadioControl"
-        Square150x150Logo="Assets\Square150x150Logo.png"
-        Square44x44Logo="Assets\Square44x44Logo.png"
-        Description="RadioControl"
-        BackgroundColor="transparent">
-        <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png"/>
+    <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="RadioControl.App">
+      <uap:VisualElements DisplayName="RadioControlCmd" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" Description="App that allows command-line control of radio devices." BackgroundColor="transparent">
+        <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png" Square310x310Logo="Assets\LargeTile.png" Square71x71Logo="Assets\SmallTile.png" ShortName="Radio Control">
+          <uap:ShowNameOnTiles>
+            <uap:ShowOn Tile="square150x150Logo" />
+            <uap:ShowOn Tile="wide310x150Logo" />
+            <uap:ShowOn Tile="square310x310Logo" />
+          </uap:ShowNameOnTiles>
+        </uap:DefaultTile>
         <uap:SplashScreen Image="Assets\SplashScreen.png" />
       </uap:VisualElements>
-	  <Extensions>
-		  <uap5:Extension
-			Category="windows.appExecutionAlias"
-			Executable="RadioControl.exe"
-			EntryPoint="RadioControl.App">
-			<uap5:AppExecutionAlias>
-			  <uap5:ExecutionAlias Alias="RadioControl.exe" />
-			</uap5:AppExecutionAlias>
-		  </uap5:Extension>
-	  </Extensions>
+      <Extensions>
+        <uap5:Extension Category="windows.appExecutionAlias" Executable="RadioControl.exe" EntryPoint="RadioControl.App">
+          <uap5:AppExecutionAlias>
+            <uap5:ExecutionAlias Alias="RadioControl.exe" />
+          </uap5:AppExecutionAlias>
+        </uap5:Extension>
+      </Extensions>
     </Application>
   </Applications>
-
   <Capabilities>
     <Capability Name="internetClient" />
-	<DeviceCapability Name="radios" />
+    <DeviceCapability Name="radios" />
   </Capabilities>
 </Package>

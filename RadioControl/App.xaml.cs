@@ -1,8 +1,8 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Linq;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
+using Windows.ApplicationModel.Core;
 using Windows.Devices.Radios;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -90,6 +90,23 @@ namespace RadioControl
             deferral.Complete();
         }
 
+        private void ShowError(string error)
+        {
+            var rootFrame = Window.Current.Content as Frame;
+            if (rootFrame == null)
+            {
+                rootFrame = new Frame();
+                Window.Current.Content = rootFrame;
+            }
+
+            rootFrame.Navigate(typeof(MainPage));
+
+            Window.Current.Activate();
+            var mainPage = MainPage.Current;
+
+            mainPage.NotifyUser(error, MainPage.NotifyType.ErrorMessage);
+        }
+
         protected override async void OnActivated(IActivatedEventArgs args)
         {
             switch (args.Kind)
@@ -103,11 +120,9 @@ namespace RadioControl
 
                     string[] cmdArgs = cmdLineString.Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);
 
-                    var mainPage = MainPage.Current;
-
                     if (cmdArgs.Count() != 2)
                     {
-                        mainPage.NotifyUser("Invalid number of arguments. Usage: RadioControl.exe RADIO_INDEX_OR_NAME ON|OFF", MainPage.NotifyType.ErrorMessage);
+                        ShowError("Invalid number of arguments. Usage: RadioControl.exe RADIO_INDEX_OR_NAME ON|OFF");
                         return;
                     }
 
@@ -129,36 +144,38 @@ namespace RadioControl
                         actionEnable = true;
                     } else if (cmdArgs[1].ToLower() != "off")
                     {
-                        mainPage.NotifyUser("Unsupported action '" + cmdArgs[1] + "'. Only 'on' and 'off' are supported.", MainPage.NotifyType.ErrorMessage);
+                        ShowError("Unsupported action '" + cmdArgs[1] + "'. Only 'on' and 'off' are supported.");
                         return;
                     }
-
-                    Debug.WriteLine("Will turn device " + (isDeviceNumeric ? deviceNumber.ToString() : deviceName) + " " + (actionEnable ? "on" : "off"));
 
                     var accessLevel = await Radio.RequestAccessAsync();
                     if (accessLevel != RadioAccessStatus.Allowed)
                     {
-                        mainPage.NotifyUser("Could not get access to radios. Allow it in Windows settings.", MainPage.NotifyType.ErrorMessage);
+                        ShowError("Could not get access to radios. Allow it in Windows settings.");
                         return;
                     }
                     else
                     {
-                        var radios = mainPage.radios;
+                        var radios = await Radio.GetRadiosAsync();
                         for (int i = 0; i < radios.Count; i++)
                         {
                             var radio = radios[i];
                             if ((isDeviceNumeric && i == deviceNumber) || (!isDeviceNumeric && radio.Name.ToLower() == deviceName.ToLower()))
                             {
-                                radio.IsRadioOn = actionEnable;
-                                break;
+                                var radioState = actionEnable ? RadioState.On : RadioState.Off;
+                                await radio.SetStateAsync(radioState);
+                                CoreApplication.Exit();
+                                return;
                             }
                         }
+
+                        ShowError("Radio " + deviceName + "/" + deviceNumber + " was not found.");
+                        return;
                     }
-                    
+
                     break;
             }
 
-            base.OnActivated(args);
         }
     }
 }
